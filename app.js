@@ -4,7 +4,7 @@ const app = express();
 app.set("view engine", "ejs");
 
 app.get("/", (req, res) => {
-     res.send("this will be the landing page");
+     res.render("landing");
 });
 
 app.get("/campgrounds", (req, res) => {
