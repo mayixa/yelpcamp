@@ -1,8 +1,11 @@
 <% include partials/header %>
 
-<h1>Campgrounds page</h1>
-
-<a href="/campgrounds/new">Add new campground</a>
+<header class="jumbotron">
+    <h1 class="display-4">Campgrounds</h1>
+    <p class="lead">View the best campgrounds from all over the world.</p>
+    <a class="btn btn-primary btn-lg" href="/campgrounds/new" role="button">
+        Add new campground</a>
+</header>
 
 <div class="row text-center" id="camp-grid">
     <% campgrounds.forEach((campground) => { %>
