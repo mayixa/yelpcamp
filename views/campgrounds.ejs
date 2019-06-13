@@ -1,8 +1,20 @@
+<% include partials/header %>
+
 <h1>Campgrounds page</h1>
 
-<% campgrounds.forEach((campground) => { %>
-    <div>
-        <h2><%= campground.name %></h2>
-        <img src="<%= campground.image %>">
-    </div>
-<% }); %>
+<a href="/campgrounds/new">Add new campground</a>
+
+<div class="row text-center" id="camp-grid">
+    <% campgrounds.forEach((campground) => { %>
+        <div class="col-md-3 col-sm-6">
+            <div class="card">
+                <img class="card-img-top" src="<%= campground.image %>" alt="<%= campground.name %>">
+                <h2><%= campground.name %></h2>
+                
+            </div>
+        </div>
+    <% }); %>
+</div>
+
+
+<% include partials/footer %>
