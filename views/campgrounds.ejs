@@ -6,11 +6,13 @@
 
 <div class="row text-center" id="camp-grid">
     <% campgrounds.forEach((campground) => { %>
-        <div class="col-md-3 col-sm-6">
+        <div class="col-lg-3 col-md-3 col-sm-6 mb-4">
             <div class="card">
                 <img class="card-img-top" src="<%= campground.image %>" alt="<%= campground.name %>">
-                <h2><%= campground.name %></h2>
-                
+                <div class="card-body">
+                    <h3 class="card-title"><%= campground.name %></h3>
+                    <a class="btn btn-primary" href="/campgrounds/<%= campground._id %>">More info</a>
+                </div>
             </div>
         </div>
     <% }); %>
