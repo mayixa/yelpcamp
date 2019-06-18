@@ -6,7 +6,9 @@ Project from the course "The Web Developer Bootcamp" @Udemy.com
 * CSS
 * JavaScript
 * Node.js
+* mongoDB
 * npm packages: 
     * body-parser
     * express
     * ejs
+    * mongoose
