@@ -1,7 +1,8 @@
-const express = require("express");
-const app = express();
-const bodyParser = require("body-parser");
-const mongoose = require('mongoose');
+const express = require("express"),
+      app = express(),
+      bodyParser = require("body-parser"),
+      mongoose = require('mongoose');
+
 mongoose.connect('mongodb+srv://Mayixa:flingan95@mayixa-avcru.azure.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
 
 const db = mongoose.connection;
@@ -13,28 +14,52 @@ db.once('open', function() {
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
-const campgrounds = [
-    {name: "Åsen", image: "https://cdn.pixabay.com/photo/2015/08/27/00/23/finland-909266_1280.jpg"},
-    {name: "Vreken", image: "https://cdn.pixabay.com/photo/2017/06/26/21/02/camp-2445212_1280.jpg"},
-    {name: "Klohill", image: "https://cdn.pixabay.com/photo/2017/02/14/08/51/wintry-2065342_1280.jpg"},
-    {name: "Stubben", image: "https://cdn.pixabay.com/photo/2015/10/12/14/58/camping-984038_1280.jpg"},
-    {name: "Klohill", image: "https://cdn.pixabay.com/photo/2017/02/14/08/51/wintry-2065342_1280.jpg"},
-    {name: "Stubben", image: "https://cdn.pixabay.com/photo/2015/10/12/14/58/camping-984038_1280.jpg"}
-]
+const campgroundSchema = new mongoose.Schema({
+    name: String,
+    image: String,
+    price: String,
+    location: String,
+    descr: String
+});
+
+const campground = new mongoose.model("campground", campgroundSchema);
+
+// const campgrounds = [
+//     {name: "Klohill", image: "https://cdn.pixabay.com/photo/2017/02/14/08/51/wintry-2065342_1280.jpg"},
+//     {name: "Stubben", image: "https://cdn.pixabay.com/photo/2015/10/12/14/58/camping-984038_1280.jpg"},
+// ]
 
 app.get("/", (req, res) => {
      res.render("landing");
 });
 
 app.get("/campgrounds", (req, res) => {
-    res.render("campgrounds", {campgrounds: campgrounds});
+    campground.find({}, function(err, allCampgrounds){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("campgrounds", {campgrounds: allCampgrounds});
+        }
+    });
+
 });
 
 app.post("/campgrounds", (req, res) => {
     const name = req.body.name;
     const image = req.body.image;
-    const newCamp = {name: name, image: image};
-    campgrounds.push(newCamp);
+    const newCamp = 
+    {
+        name: name,
+        image: image
+    };
+    campground.create(newCamp, function(err, newlyCreated){
+        if(err){
+            console.log(err);
+        } else {
+            console.log('New camp created!');
+            console.log(newlyCreated);
+        }
+    });
     res.redirect("/campgrounds");
 });
 
