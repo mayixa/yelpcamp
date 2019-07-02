@@ -33,18 +33,18 @@ app.get("/", (req, res) => {
      res.render("landing");
 });
 
-app.get("/campgrounds", (req, res) => {
+app.get("/index", (req, res) => {
     campground.find({}, function(err, allCampgrounds){
         if(err){
             console.log(err);
         } else {
-            res.render("campgrounds", {campgrounds: allCampgrounds});
+            res.render("index", {campgrounds: allCampgrounds});
         }
     });
 
 });
 
-app.post("/campgrounds", (req, res) => {
+app.post("/index", (req, res) => {
     const name = req.body.name;
     const image = req.body.image;
     const newCamp = 
@@ -60,15 +60,15 @@ app.post("/campgrounds", (req, res) => {
             console.log(newlyCreated);
         }
     });
-    res.redirect("/campgrounds");
+    res.redirect("/index");
 });
 
-app.get("/campgrounds/new", (req, res) => {
+app.get("/index/new", (req, res) => {
     res.render("new");
 });
 
-app.get("/campgrounds/:id", (req, res) => {
-    res.send("this will be the show page soon");
+app.get("/index/:id", (req, res) => {
+    res.render("show");
 });
 
 app.listen(3000, () => {
