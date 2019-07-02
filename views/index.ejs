@@ -6,7 +6,7 @@
         <div class="container">
             <h1>Campgrounds</h1>
             <p class="lead">View the best campgrounds from all over the world.</p>
-            <a class="btn btn-outline-success btn-lg" href="/campgrounds/new" role="button">
+            <a class="btn btn-outline-success btn-lg" href="/index/new" role="button">
                 Add new campground</a>
         </div>
     </header>
@@ -18,7 +18,7 @@
                     <img class="card-img-top" src="<%= campground.image %>" alt="<%= campground.name %>">
                     <div class="card-body">
                         <h3 class="card-title"><%= campground.name %></h3>
-                        <a class="btn btn-success" href="/campgrounds/<%= campground._id %>">More info</a>
+                        <a class="btn btn-success" href="/index/<%= campground._id %>">More info</a>
                     </div>
                 </div>
             </div>
