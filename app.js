@@ -12,6 +12,7 @@ db.once('open', function() {
 });
 
 app.use(bodyParser.urlencoded({extended: true}));
+// app.use(express.static(__dirname + '/partials'));
 app.set("view engine", "ejs");
 
 const campgroundSchema = new mongoose.Schema({
