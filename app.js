@@ -51,7 +51,10 @@ app.post("/index", (req, res) => {
     const newCamp = 
     {
         name: name,
-        image: image
+        image: image,
+        price: price,
+        location: location,
+        descr: descr
     };
     campground.create(newCamp, function(err, newlyCreated){
         if(err){
@@ -69,7 +72,13 @@ app.get("/index/new", (req, res) => {
 });
 
 app.get("/index/:id", (req, res) => {
-    res.render("show");
+    campground.findById(req.params.id, function(err, foundCamp){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("show", {campground: foundCamp});
+        }
+    });
 });
 
 app.listen(3000, () => {
