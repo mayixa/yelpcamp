@@ -48,13 +48,16 @@ app.get("/index", (req, res) => {
 app.post("/index", (req, res) => {
     const name = req.body.name;
     const image = req.body.image;
+    const price = req.body.price;
+    const location = req.body.image;
+    const descr = req.body.descr;
     const newCamp = 
-    {
+    {   
         name: name,
         image: image,
         price: price,
         location: location,
-        descr: descr
+        descr: descr    
     };
     campground.create(newCamp, function(err, newlyCreated){
         if(err){
