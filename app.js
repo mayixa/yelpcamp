@@ -1,7 +1,8 @@
-const express = require("express"),
-      app = express(),
-      bodyParser = require("body-parser"),
-      mongoose = require('mongoose');
+const express       = require("express"),
+      app           = express(),
+      bodyParser    = require("body-parser"),
+      mongoose      = require('mongoose'),
+      campground    = require('./models/campground');
 
 mongoose.connect('mongodb+srv://Mayixa:flingan95@mayixa-avcru.azure.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
 
@@ -14,16 +15,6 @@ db.once('open', function() {
 app.use(bodyParser.urlencoded({extended: true}));
 // app.use(express.static(__dirname + '/partials'));
 app.set("view engine", "ejs");
-
-const campgroundSchema = new mongoose.Schema({
-    name: String,
-    image: String,
-    price: String,
-    location: String,
-    descr: String
-});
-
-const campground = new mongoose.model("campground", campgroundSchema);
 
 // const campgrounds = [
 //     {name: "Klohill", image: "https://cdn.pixabay.com/photo/2017/02/14/08/51/wintry-2065342_1280.jpg"},
