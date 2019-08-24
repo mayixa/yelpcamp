@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
-import { remove, create } from "./models/campground";
-import { remove as _remove, create as _create } from "./models/comment";
+const mongoose = require("mongoose");
+const Campground = require("./models/campground");
+const Comment   = require("./models/comment");
  
 const data = [
     {
@@ -22,25 +22,25 @@ const data = [
  
 function seedDB(){
    //Remove all campgrounds
-   remove({}, function(err){
+   Campground.remove({}, function(err){
         if(err){
             console.log(err);
         }
         console.log("removed campgrounds!");
-        _remove({}, function(err) {
+        Comment.remove({}, function(err) {
             if(err){
                 console.log(err);
             }
             console.log("removed comments!");
              //add a few campgrounds
             data.forEach(function(seed){
-                create(seed, function(err, campground){
+                Campground.create(seed, function(err, campground){
                     if(err){
                         console.log(err)
                     } else {
                         console.log("added a campground");
                         //create a comment
-                        _create(
+                        Comment.create(
                             {
                                 text: "This place is great, but I wish there was internet",
                                 author: "Homer"
@@ -61,4 +61,4 @@ function seedDB(){
     //add a few comments
 }
  
-export default seedDB;
+module.exports = seedDB;

@@ -1,18 +1,18 @@
-import express from "express";
-const app = express();
-import { urlencoded } from "body-parser";
-import { connect, connection } from 'mongoose';
-import { find, create, findById } from './models/campground';
+const express       = require("express"),
+      app           = express(),
+      bodyParser    = require("body-parser"),
+      mongoose      = require('mongoose'),
+      campground    = require('./models/campground');
 
-connect('mongodb+srv://Mayixa:flingan95@mayixa-avcru.azure.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
+mongoose.connect('mongodb+srv://Mayixa:flingan95@mayixa-avcru.azure.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
 
-const db = connection;
+const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log('Connected to mongoDB!')
 });
 
-app.use(urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: true}));
 // app.use(express.static(__dirname + '/partials'));
 app.set("view engine", "ejs");
 
@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/index", (req, res) => {
-    find({}, function(err, allCampgrounds){
+    campground.find({}, function(err, allCampgrounds){
         if(err){
             console.log(err);
         } else {
@@ -50,7 +50,7 @@ app.post("/index", (req, res) => {
         location: location,
         descr: descr    
     };
-    create(newCamp, function(err, newlyCreated){
+    campground.create(newCamp, function(err, newlyCreated){
         if(err){
             console.log(err);
         } else {
@@ -66,7 +66,7 @@ app.get("/index/new", (req, res) => {
 });
 
 app.get("/index/:id", (req, res) => {
-    findById(req.params.id, function(err, foundCamp){
+    campground.findById(req.params.id, function(err, foundCamp){
         if(err){
             console.log(err);
         } else {
