@@ -9,9 +9,9 @@ const campgroundSchema = new mongoose.Schema({
     comments: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Comment'
+            ref: "Comment"
         }
     ]
 });
 
-module.exports = mongoose.model('campground', campgroundSchema);
+module.exports = mongoose.model("campground", campgroundSchema);
