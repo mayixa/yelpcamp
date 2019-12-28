@@ -12,3 +12,7 @@ Project from the course "The Web Developer Bootcamp" @Udemy.com
     * express
     * ejs
     * mongoose
+
+## During production
+nodemon app.js
+http://localhost:3000/

@@ -21,18 +21,22 @@ const seeds = [
 ]
  
 async function seedDB(){
-    await Campground.remove({});
-    await Comment.remove({});
-    for(const seed of seeds) {
-        let camp = await Campground.create(seed);
-        let comments = await Comment.create(
-            {
-                text: 'This place is great, but I wish there was internet',
-                author: 'Homer'
-            }
-        )
-        camp.comments.push(Comment);
-        camp.save();
+    try {
+        await Campground.remove({});
+        await Comment.remove({});
+        for(const seed of seeds) {
+            let camp = await Campground.create(seed);
+            let comments = await Comment.create(
+                {
+                    text: 'This place is great, but I wish there was internet',
+                    author: 'Homer'
+                }
+            )
+            camp.comments.push(Comment);
+            camp.save();
+        }
+    } catch(err){
+        console.log(err);
     }
 };
 module.exports = seedDB;
