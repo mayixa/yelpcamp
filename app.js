@@ -1,6 +1,6 @@
-const express       = require("express"),
+const express       = require('express'),
       app           = express(),
-      bodyParser    = require("body-parser"),
+      bodyParser    = require('body-parser'),
       mongoose      = require('mongoose'),
       campground    = require('./models/campground');
 
@@ -14,29 +14,24 @@ db.once('open', function() {
 
 app.use(bodyParser.urlencoded({extended: true}));
 // app.use(express.static(__dirname + '/partials'));
-app.set("view engine", "ejs");
-
-// const campgrounds = [
-//     {name: "Klohill", image: "https://cdn.pixabay.com/photo/2017/02/14/08/51/wintry-2065342_1280.jpg"},
-//     {name: "Stubben", image: "https://cdn.pixabay.com/photo/2015/10/12/14/58/camping-984038_1280.jpg"},
-// ]
+app.set('view engine', 'ejs');
 
 app.get("/", (req, res) => {
-     res.render("landing");
+     res.render('landing');
 });
 
-app.get("/index", (req, res) => {
+app.get('/index', (req, res) => {
     campground.find({}, function(err, allCampgrounds){
         if(err){
             console.log(err);
         } else {
-            res.render("index", {campgrounds: allCampgrounds});
+            res.render('index', {campgrounds: allCampgrounds});
         }
     });
 
 });
 
-app.post("/index", (req, res) => {
+app.post('/index', (req, res) => {
     const name = req.body.name;
     const image = req.body.image;
     const price = req.body.price;
@@ -58,23 +53,24 @@ app.post("/index", (req, res) => {
             console.log(newlyCreated);
         }
     });
-    res.redirect("/index");
+    res.redirect('/index');
 });
 
-app.get("/index/new", (req, res) => {
-    res.render("new");
+app.get('/index/new', (req, res) => {
+    res.render('new');
 });
 
-app.get("/index/:id", (req, res) => {
-    campground.findById(req.params.id, function(err, foundCamp){
+app.get('/index/:id', (req, res) => {
+    campground.findById(req.params.id).populate('comments').exec(function(err, foundCamp){
         if(err){
             console.log(err);
         } else {
-            res.render("show", {campground: foundCamp});
+            console.log(foundCamp);
+            res.render('show', {campground: foundCamp});
         }
     });
 });
 
 app.listen(3000, () => {
-    console.log("The YelpCamp Server Has Started!");
+    console.log('The YelpCamp Server Has Started!');
 });

@@ -1,6 +1,6 @@
-const mongoose      = require("mongoose");
-const Campground    = require("./models/campground");
-const Comment       = require("./models/comment");
+const mongoose      = require('mongoose');
+const Campground    = require('./models/campground').default;
+const Comment       = require('./models/comment').default;
  
 const seeds = [
     {
