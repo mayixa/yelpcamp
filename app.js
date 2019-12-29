@@ -3,6 +3,7 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   mongoose = require('mongoose'),
   campground = require('./models/campground');
+  comment = require('./models/comment');
   seedDB = require('./seeds');
 
 seedDB();
@@ -77,12 +78,33 @@ app.get('/index/:id', (req, res) => {
     });
 });
 
+//comments routes
+
 app.get('/index/:id/comments/new', (req, res) => {
     campground.findById(req.params.id, (err, campground) => {
         if (err) {
             console.log(err);
         } else {
             res.render('comments/new', {campground: campground});
+        }
+    });
+});
+
+app.post('/index/:id/comments', (req, res) => {
+    campground.findById(req.params.id, (err, campground) => {
+        if (err) {
+            console.log(err);
+            res.redirect('/index');
+        } else {
+            comment.create(req.body.comment, (err, comment) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    campground.comments.push(comment);
+                    campground.save();
+                    res.redirect('/index/' + campground._id);
+                }
+            });
         }
     });
 });
