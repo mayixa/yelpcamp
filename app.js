@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/index', (req, res) => {
-  campground.find({}, function(err, allCampgrounds) {
+  campground.find({}, (err, allCampgrounds) => {
     if (err) {
       console.log(err);
     } else {
@@ -48,7 +48,7 @@ app.post('/index', (req, res) => {
     location: location,
     descr: descr
   };
-  campground.create(newCamp, function(err, newlyCreated) {
+  campground.create(newCamp, (err, newlyCreated) => {
     if (err) {
       console.log(err);
     } else {
@@ -67,7 +67,7 @@ app.get('/index/:id', (req, res) => {
   campground
     .findById(req.params.id)
     .populate('comments')
-    .exec(function(err, foundCamp) {
+    .exec((err, foundCamp) => {
       if (err) {
         console.log(err);
       } else {
@@ -78,7 +78,13 @@ app.get('/index/:id', (req, res) => {
 });
 
 app.get('/index/:id/comments/new', (req, res) => {
-    res.render('comments/new');
+    campground.findById(req.params.id, (err, campground) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render('comments/new', {campground: campground});
+        }
+    });
 });
 
 app.listen(3000, () => {
