@@ -30,7 +30,7 @@ app.get('/index', (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      res.render('index', { campgrounds: allCampgrounds });
+      res.render('campgrounds/index', { campgrounds: allCampgrounds });
     }
   });
 });
@@ -60,7 +60,7 @@ app.post('/index', (req, res) => {
 });
 
 app.get('/index/new', (req, res) => {
-  res.render('new');
+  res.render('campgrounds/new');
 });
 
 app.get('/index/:id', (req, res) => {
@@ -72,13 +72,13 @@ app.get('/index/:id', (req, res) => {
         console.log(err);
       } else {
         console.log(foundCamp);
-        res.render('show', { campground: foundCamp });
+        res.render('campgrounds/show', { campground: foundCamp });
       }
     });
 });
 
 app.get('/index/:id/comments/new', (req, res) => {
-    res.send('comment form here');
+    res.render('comments/new');
 });
 
 app.listen(3000, () => {
