@@ -1,6 +1,6 @@
 const mongoose      = require('mongoose');
-const Campground    = require('./models/campground').default;
-const Comment       = require('./models/comment').default;
+const Campground    = require('./models/campground');
+const Comment       = require('./models/comment');
  
 const seeds = [
     {
@@ -23,17 +23,23 @@ const seeds = [
 async function seedDB(){
     try {
         await Campground.remove({});
+        console.log('Camps removed');
         await Comment.remove({});
+        console.log('Comments removed');
+
         for(const seed of seeds) {
             let camp = await Campground.create(seed);
-            let comments = await Comment.create(
+            console.log('Camp created');
+            let comment = await Comment.create(
                 {
                     text: 'This place is great, but I wish there was internet',
                     author: 'Homer'
                 }
             )
-            camp.comments.push(Comment);
+            console.log('Comment created');
+            camp.comments.push(comment);
             camp.save();
+            console.log('Comment added to camp');
         }
     } catch(err){
         console.log(err);

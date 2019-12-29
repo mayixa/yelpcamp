@@ -3,7 +3,9 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   mongoose = require('mongoose'),
   campground = require('./models/campground');
+  seedDB = require('./seeds');
 
+seedDB();
 mongoose.connect(
   'mongodb+srv://Mayixa:flingan95@mayixa-avcru.azure.mongodb.net/test?retryWrites=true&w=majority',
   { useNewUrlParser: true }
