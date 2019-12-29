@@ -77,6 +77,10 @@ app.get('/index/:id', (req, res) => {
     });
 });
 
+app.get('/index/:id/comments/new', (req, res) => {
+    res.send('comment form here');
+});
+
 app.listen(3000, () => {
   console.log('The YelpCamp Server Has Started!');
 });
