@@ -2,11 +2,14 @@
 
 <h1><%= campground.name %></h1>
 <p><%= campground.descr %></p>
-<img src="<%= campground.image %>" alt="<%= campground.name %>">
-
+<img src="<%= campground.image %>" alt="<%= campground.name %>" />
+<p>
+  <a
+    class="btn btn-outline-success m-1"
+    href="/index/<%= campground._id %>/comments/new"
+    >Add new comment</a
+  >
+</p>
 <% campground.comments.forEach(function(comment){ %>
-    <p>
-        <strong><%= comment.author %></strong> - <%= comment.text %>
-    </p>
-<% }) %>
-<% include ../partials/footer %>
+<p><strong><%= comment.author %></strong> - <%= comment.text %></p>
+<% }) %> <% include ../partials/footer %>
