@@ -9,9 +9,10 @@ Project from the course "The Web Developer Bootcamp" @Udemy.com
 * mongoDB
 * npm packages: 
     * body-parser
-    * express
+    * express, express-session
     * ejs
     * mongoose
+    * passport, passport-local, passport-local-mongoose
 
 ## During production
 nodemon app.js
