@@ -26,14 +26,19 @@ router.post('/', isLoggedIn, (req, res) => {
   const name = req.body.name;
   const image = req.body.image;
   const price = req.body.price;
-  const location = req.body.image;
+  const location = req.body.location;
   const descr = req.body.descr;
+  const author = {
+    id: req.user._id,
+    username: req.user.username
+  };
   const newCamp = {
     name: name,
     image: image,
     price: price,
     location: location,
-    descr: descr
+    descr: descr,
+    author: author
   };
   campground.create(newCamp, (err, newlyCreated) => {
     if (err) {
