@@ -2,8 +2,11 @@ const express = require('express'),
   app = express(),
   bodyParser = require('body-parser'),
   mongoose = require('mongoose'),
-  campground = require('./models/campground');
-  comment = require('./models/comment');
+  passport = require('passport'),
+  localStrategy = require('passport-local'),
+  campground = require('./models/campground'),
+  comment = require('./models/comment'),
+  User = require('./models/user'),
   seedDB = require('./seeds');
 
 seedDB();
