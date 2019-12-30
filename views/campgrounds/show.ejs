@@ -29,11 +29,15 @@
         </div>
         <div class="card-footer">
           <p class="float-right">Published by <strong><%= campground.author.username %></strong></p>
-          <a
-            class="btn btn-warning m-1"
+          <% if (!currentUser) { %>
+          <!--show nothing if not signed in-->
+          <% } else { %>
+            <a
+            class="btn btn-sm btn-warning m-1"
             href="/index/<%= campground._id %>/edit"
             >Edit information</a
           >
+          <% } %>
         </div>
       </div>
       <div class="card mt-3 text-white bg-dark">
