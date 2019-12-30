@@ -13,6 +13,7 @@ Project from the course "The Web Developer Bootcamp" @Udemy.com
     * ejs
     * mongoose
     * passport, passport-local, passport-local-mongoose
+    * method-override
 
 ## During production
 nodemon app.js

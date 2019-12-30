@@ -1,6 +1,9 @@
-const express = require('express'),
+const mongoose = require('mongoose'),
+  express = require('express'),
   router = express.Router(),
   campground = require('../models/campground');
+
+mongoose.set('useFindAndModify', false);
 
 // middleware
 const isLoggedIn = (req, res, next) => {
@@ -67,6 +70,31 @@ router.get('/:id', (req, res) => {
       } else {
         console.log(foundCamp);
         res.render('campgrounds/show', { campground: foundCamp });
+      }
+    });
+});
+
+// EDIT camp route
+router.get('/:id/edit', isLoggedIn, (req, res) => {
+  campground.findById(req.params.id, (err, foundCamp) => {
+    if (err) {
+      res.redirect('/index');
+    } else {
+      res.render('campgrounds/edit', {campground: foundCamp});
+    }
+  });
+});
+
+// UPDATE camp route
+router.put('/:id', isLoggedIn, (req, res) => {
+  campground.findByIdAndUpdate(
+    req.params.id,
+    req.body.campground, 
+    (err, updated) => {
+      if (err) {
+        res.redirect('/index');
+      } else {
+        res.redirect('/index/' + req.params.id);
       }
     });
 });
