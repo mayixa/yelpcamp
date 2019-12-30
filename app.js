@@ -4,6 +4,7 @@ const express = require('express'),
   mongoose = require('mongoose'),
   passport = require('passport'),
   localStrategy = require('passport-local'),
+  methodOverride = require('method-override'),
   User = require('./models/user'),
   seedDB = require('./seeds');
 
@@ -27,7 +28,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // if you need to use a custom stylesheet/css, code below is useful:
 // app.use(express.static(__dirname + '/directory'));
 app.set('view engine', 'ejs');
-seedDB();
+app.use(methodOverride('_method'));
+// seedDB();
 
 // passport config
 app.use(
