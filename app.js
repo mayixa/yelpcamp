@@ -9,12 +9,13 @@ const express = require('express'),
 seedDB();
 mongoose.connect(
   'mongodb+srv://Mayixa:flingan95@mayixa-avcru.azure.mongodb.net/test?retryWrites=true&w=majority',
-  { useNewUrlParser: true }
+  { useNewUrlParser: true,
+    useUnifiedTopology: true }
 );
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
+db.once('open', () => {
   console.log('Connected to mongoDB!');
 });
 
