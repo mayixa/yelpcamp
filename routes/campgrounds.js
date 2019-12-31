@@ -99,4 +99,16 @@ router.put('/:id', isLoggedIn, (req, res) => {
     });
 });
 
+// REMOVE camp route
+router.delete('/:id', (req, res) => {
+  campground.findByIdAndRemove(req.params.id, (err) => {
+    if (err) {
+      res.redirect('/index');
+    } else {
+      console.log('Removed camp ' + req.params.id)
+      res.redirect('/index');
+    }
+  });
+});
+
 module.exports = router;

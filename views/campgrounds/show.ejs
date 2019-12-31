@@ -28,15 +28,24 @@
           <p class="card-text"><%= campground.descr %></p>
         </div>
         <div class="card-footer">
-          <p class="float-right">Published by <strong><%= campground.author.username %></strong></p>
+          <p class="float-right">
+            Published by <strong><%= campground.author.username %></strong>
+          </p>
           <% if (!currentUser) { %>
           <!--show nothing if not signed in-->
           <% } else { %>
-            <a
-            class="btn btn-sm btn-warning m-1"
-            href="/index/<%= campground._id %>/edit"
-            >Edit information</a
-          >
+            <div class="d-flex justify-content-start">
+              <a
+              class="btn btn-sm btn-warning m-1"
+              href="/index/<%= campground._id %>/edit"
+              >Edit information</a
+            >
+            <form action="/index/<%= campground._id %>?_method=DELETE" method="POST">
+              <button class="btn btn-sm btn-danger m-1">
+                Delete campground
+              </button>
+            </form>
+            </div>
           <% } %>
         </div>
       </div>
