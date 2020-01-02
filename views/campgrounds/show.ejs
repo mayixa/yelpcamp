@@ -31,21 +31,25 @@
           <p class="float-right">
             Published by <strong><%= campground.author.username %></strong>
           </p>
-          <% if (currentUser && campground.author.id.equals(currentUser._id)) { %>
-            <div class="d-flex justify-content-start">
-              <a
+          <% if (currentUser && campground.author.id.equals(currentUser._id)) {
+          %>
+          <div class="d-flex justify-content-start">
+            <a
               class="btn btn-sm btn-warning m-1"
               href="/index/<%= campground._id %>/edit"
               >Edit information</a
             >
-            <form action="/index/<%= campground._id %>?_method=DELETE" method="POST">
+            <form
+              action="/index/<%= campground._id %>?_method=DELETE"
+              method="POST"
+            >
               <button class="btn btn-sm btn-danger m-1">
                 Delete campground
               </button>
             </form>
-            </div>
+          </div>
           <% } %>
-        </div> 
+        </div>
       </div>
       <div class="card mt-3 text-white bg-dark">
         <div class="card-header">
@@ -66,6 +70,18 @@
               <p>
                 <%= comment.text %>
               </p>
+              <div class="d-flex justify-content-start">
+                <a
+                  class="btn btn-sm btn-warning m-1"
+                  href="/index/<%= campground._id %>/comments/<%= comment._id %>/edit"
+                  >Edit</a
+                >
+                <form action="" method="POST">
+                  <button class="btn btn-sm btn-danger m-1">
+                    Delete
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
           <% }) %>
