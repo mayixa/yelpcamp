@@ -31,9 +31,7 @@
           <p class="float-right">
             Published by <strong><%= campground.author.username %></strong>
           </p>
-          <% if (!currentUser) { %>
-          <!--show nothing if not signed in-->
-          <% } else { %>
+          <% if (currentUser && campground.author.id.equals(currentUser._id)) { %>
             <div class="d-flex justify-content-start">
               <a
               class="btn btn-sm btn-warning m-1"
@@ -47,7 +45,7 @@
             </form>
             </div>
           <% } %>
-        </div>
+        </div> 
       </div>
       <div class="card mt-3 text-white bg-dark">
         <div class="card-header">
