@@ -1,37 +1,11 @@
 const express = require('express'),
   router = express.Router({ mergeParams: true }),
   campground = require('../models/campground'),
-  comment = require('../models/comment');
-
-// middleware
-const isLoggedIn = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/login');
-};
-
-const checkCommentOwner = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    comment.findById(req.params.comment_id, (err, foundComment) => {
-      if (err) {
-        res.redirect('back');
-      } else {
-        // does user own comment?
-        if (foundComment.author.id.equals(req.user._id)) {
-          next();
-        } else {
-          res.redirect('back');
-        }
-      }
-    });
-  } else {
-    res.redirect('back');
-  }
-};
+  comment = require('../models/comment'),
+  middleware = require('../middleware');
 
 // new comment/review form
-router.get('/new', isLoggedIn, (req, res) => {
+router.get('/new', middleware.isLoggedIn, (req, res) => {
   campground.findById(req.params.id, (err, campground) => {
     if (err) {
       console.log(err);
@@ -42,7 +16,7 @@ router.get('/new', isLoggedIn, (req, res) => {
 });
 
 // submit comment/review form
-router.post('/', isLoggedIn, (req, res) => {
+router.post('/', middleware.isLoggedIn, (req, res) => {
   campground.findById(req.params.id, (err, campground) => {
     if (err) {
       console.log(err);
@@ -68,7 +42,7 @@ router.post('/', isLoggedIn, (req, res) => {
 });
 
 // edit comment route
-router.get('/:comment_id/edit', checkCommentOwner, (req, res) => {
+router.get('/:comment_id/edit', middleware.checkCommentOwner, (req, res) => {
   comment.findById(req.params.comment_id, (err, foundComment) => {
     if (err) {
       res.redirect('back');
@@ -97,7 +71,7 @@ router.put('/:comment_id', (req, res) => {
 });
 
 // comment remove route
-router.delete('/:comment_id', checkCommentOwner, (req, res) => {
+router.delete('/:comment_id', middleware.checkCommentOwner, (req, res) => {
   comment.findByIdAndRemove(req.params.comment_id, (err) => {
     if (err) {
       res.redirect('back');
