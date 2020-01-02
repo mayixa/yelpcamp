@@ -14,6 +14,7 @@ Project from the course "The Web Developer Bootcamp" @Udemy.com
     * mongoose
     * passport, passport-local, passport-local-mongoose
     * method-override
+    * connect-flash
 
 ## During production
 nodemon app.js

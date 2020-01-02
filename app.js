@@ -6,6 +6,7 @@ const express = require('express'),
   localStrategy = require('passport-local'),
   methodOverride = require('method-override'),
   User = require('./models/user'),
+  flash = require('connect-flash'),
   seedDB = require('./seeds');
 
 // requiring routes
@@ -29,6 +30,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(express.static(__dirname + '/directory'));
 app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));
+app.use(flash());
 // seedDB();
 
 // passport config
