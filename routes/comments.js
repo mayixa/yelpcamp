@@ -11,6 +11,25 @@ const isLoggedIn = (req, res, next) => {
   res.redirect('/login');
 };
 
+const checkCommentOwner = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    comment.findById(req.params.comment_id, (err, foundComment) => {
+      if (err) {
+        res.redirect('back');
+      } else {
+        // does user own comment?
+        if (foundComment.author.id.equals(req.user._id)) {
+          next();
+        } else {
+          res.redirect('back');
+        }
+      }
+    });
+  } else {
+    res.redirect('back');
+  }
+};
+
 // new comment/review form
 router.get('/new', isLoggedIn, (req, res) => {
   campground.findById(req.params.id, (err, campground) => {
@@ -49,7 +68,7 @@ router.post('/', isLoggedIn, (req, res) => {
 });
 
 // edit comment route
-router.get('/:comment_id/edit', (req, res) => {
+router.get('/:comment_id/edit', checkCommentOwner, (req, res) => {
   comment.findById(req.params.comment_id, (err, foundComment) => {
     if (err) {
       res.redirect('back');
@@ -78,7 +97,7 @@ router.put('/:comment_id', (req, res) => {
 });
 
 // comment remove route
-router.delete('/:comment_id', (req, res) => {
+router.delete('/:comment_id', checkCommentOwner, (req, res) => {
   comment.findByIdAndRemove(req.params.comment_id, (err) => {
     if (err) {
       res.redirect('back');

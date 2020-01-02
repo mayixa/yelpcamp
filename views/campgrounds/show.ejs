@@ -70,6 +70,8 @@
               <p>
                 <%= comment.text %>
               </p>
+              <% if (currentUser &&
+              comment.author.id.equals(currentUser._id)) { %>
               <div class="d-flex justify-content-start">
                 <a
                   class="btn btn-sm btn-warning m-1"
@@ -85,6 +87,7 @@
                   </button>
                 </form>
               </div>
+              <% } %>
             </div>
           </div>
           <% }) %>
