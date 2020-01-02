@@ -77,4 +77,15 @@ router.put('/:comment_id', (req, res) => {
   );
 });
 
+// comment remove route
+router.delete('/:comment_id', (req, res) => {
+  comment.findByIdAndRemove(req.params.comment_id, (err) => {
+    if (err) {
+      res.redirect('back');
+    } else {
+      res.redirect('/index/' + req.params.id);
+    }
+  });
+});
+
 module.exports = router;
