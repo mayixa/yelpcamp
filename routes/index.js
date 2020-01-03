@@ -3,14 +3,6 @@ const express = require('express'),
   passport = require('passport'),
   User = require('../models/user');
 
-// middleware
-const isLoggedIn = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/login');
-};
-
 // landing page
 router.get('/', (req, res) => {
   res.render('landing');
@@ -26,12 +18,14 @@ router.post('/register', (req, res) => {
   const newUser = new User({ username: req.body.username });
   User.register(newUser, req.body.password, (err, user) => {
     if (err) {
-      console.log(err);
-      return res.render('register');
+      req.flash('error', err.message);
+      res.redirect('/register');
+    } else {
+      passport.authenticate('local')(req, res, () => {
+        req.flash('success', 'Welcome to YelpCamp ' + req.body.username + '!');
+        res.redirect('/index');
+      });
     }
-    passport.authenticate('local')(req, res, () => {
-      res.redirect('/index');
-    });
   });
 });
 
@@ -53,6 +47,7 @@ router.post(
 // logout route
 router.get('/logout', (req, res) => {
   req.logout();
+  req.flash('success', 'You successfully logged out. See you soon!');
   res.redirect('/index');
 });
 

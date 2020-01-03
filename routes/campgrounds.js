@@ -39,12 +39,15 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
   campground.create(newCamp, (err, newlyCreated) => {
     if (err) {
       console.log(err);
+      req.flash('error', 'Something went wrong');
+      res.redirect('back');
     } else {
       console.log('New camp created!');
       console.log(newlyCreated);
+      req.flash('success', 'You successfully added ' + newCamp.name + '!');
+      res.redirect('/index');
     }
   });
-  res.redirect('/index');
 });
 
 // NEW - show form to create new camp
@@ -83,6 +86,7 @@ router.put('/:id', middleware.checkCampOwner, (req, res) => {
       if (err) {
         res.redirect('/index');
       } else {
+        req.flash('success', 'You successfully updated the information');
         res.redirect('/index/' + req.params.id);
       }
     });
@@ -94,7 +98,8 @@ router.delete('/:id', middleware.checkCampOwner, (req, res) => {
     if (err) {
       res.redirect('/index');
     } else {
-      console.log('Removed camp ' + req.params.id)
+      console.log('Removed camp ' + req.params.id);
+      req.flash('success', 'Removed campground');
       res.redirect('/index');
     }
   });
