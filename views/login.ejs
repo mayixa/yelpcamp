@@ -1,10 +1,29 @@
 <% include partials/header %>
-
-<h1>Login</h1>
-<form action="/login" method="POST">
-    <input class="p-1" type="text" name="username" placeholder="Username">
-    <input class="p-1" type="password" name="password" placeholder="Password">
-    <input class="btn btn-success" type="submit" value="Login">
-</form>
+<div class="d-flex justify-content-center flex-wrap">
+  <div class="text-center w-100 m-3">
+    <h1>Login</h1>
+  </div>
+  <form
+    class="d-flex justify-content-center flex-column"
+    action="/login"
+    method="POST"
+  >
+  <div class="input-field-wrap">
+    <input
+    class="p-1 m-1"
+    type="text"
+    name="username"
+    placeholder="Username"
+  />
+  <input
+    class="p-1 m-1"
+    type="password"
+    name="password"
+    placeholder="Password"
+  />
+  </div>
+    <button class="btn btn-success m-1" type="submit">Login</button>
+  </form>
+</div>
 
 <% include partials/footer %>
