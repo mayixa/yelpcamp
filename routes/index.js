@@ -40,7 +40,7 @@ router.post(
   passport.authenticate('local', {
     successRedirect: '/index',
     failureRedirect: '/login',
-    successFlash: true,            
+    successFlash: 'Hi there Friend!',            
     failureFlash: true
   }),
   (req, res) => {}

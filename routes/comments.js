@@ -7,8 +7,9 @@ const express = require('express'),
 // new comment/review form
 router.get('/new', middleware.isLoggedIn, (req, res) => {
   campground.findById(req.params.id, (err, campground) => {
-    if (err) {
-      console.log(err);
+    if (err || !campground) {
+      req.flash('error', 'Campground not found');
+      res.redirect('back');
     } else {
       res.render('comments/new', { campground: campground });
     }
@@ -18,7 +19,8 @@ router.get('/new', middleware.isLoggedIn, (req, res) => {
 // submit comment/review form
 router.post('/', middleware.isLoggedIn, (req, res) => {
   campground.findById(req.params.id, (err, campground) => {
-    if (err) {
+    if (err || !campground) {
+      req.flash('error', 'Campground not found');
       console.log(err);
       res.redirect('/index');
     } else {
@@ -46,15 +48,21 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
 
 // edit comment route
 router.get('/:comment_id/edit', middleware.checkCommentOwner, (req, res) => {
-  comment.findById(req.params.comment_id, (err, foundComment) => {
-    if (err) {
-      res.redirect('back');
-    } else {
-      res.render('comments/edit', {
-        campground_id: req.params.id,
-        comment: foundComment
-      });
+  campground.findById(req.params.id, (err, foundCamp) => {
+    if (err || !foundCamp) {
+      req.flash('error', 'No campground found');
+      return res.redirect('back');
     }
+    comment.findById(req.params.comment_id, (err, foundComment) => {
+      if (err) {
+        res.redirect('back');
+      } else {
+        res.render('comments/edit', {
+          campground_id: req.params.id,
+          comment: foundComment
+        });
+      }
+    });
   });
 });
 
@@ -65,6 +73,7 @@ router.put('/:comment_id', (req, res) => {
     req.body.comment,
     (err, updatedComment) => {
       if (err) {
+        req.flash('error', 'Something went wrong');
         res.redirect('back');
       } else {
         req.flash('success', 'Comment updated');
@@ -78,6 +87,7 @@ router.put('/:comment_id', (req, res) => {
 router.delete('/:comment_id', middleware.checkCommentOwner, (req, res) => {
   comment.findByIdAndRemove(req.params.comment_id, (err) => {
     if (err) {
+      req.flash('error', 'Something went wrong');
       res.redirect('back');
     } else {
       req.flash('success', 'Comment removed');
