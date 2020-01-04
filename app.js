@@ -27,7 +27,7 @@ db.once('open', () => {
 
 app.use(bodyParser.urlencoded({ extended: true }));
 // if you need to use a custom stylesheet/css, code below is useful:
-// app.use(express.static(__dirname + '/directory'));
+app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));
 app.use(flash());
