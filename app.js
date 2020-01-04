@@ -26,12 +26,12 @@ db.once('open', () => {
 });
 
 app.use(bodyParser.urlencoded({ extended: true }));
-// if you need to use a custom stylesheet/css, code below is useful:
+// if you need to use a custom stylesheet/css
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));
 app.use(flash());
-// seedDB();
+// seedDB(); // seed the database with campgrounds
 
 // passport config
 app.use(
