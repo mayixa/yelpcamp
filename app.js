@@ -16,7 +16,11 @@ app.use(session({
     store: new MemoryStore({
       checkPeriod: 86400000 // prune expired entries every 24h
     }),
-    secret: 'keyboard cat'
+    secret: 'keyboard cat',
+    name: cookie_name,
+    proxy: true,
+    resave: true,
+    saveUninitialized: true
 }))
 
 // requiring routes
