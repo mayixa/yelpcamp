@@ -8,6 +8,16 @@ const express = require('express'),
   User = require('./models/user'),
   flash = require('connect-flash'),
   seedDB = require('./seeds');
+  session = require('express-session');
+  MemoryStore = require('memorystore')(session);
+ 
+app.use(session({
+    cookie: { maxAge: 86400000 },
+    store: new MemoryStore({
+      checkPeriod: 86400000 // prune expired entries every 24h
+    }),
+    secret: 'keyboard cat'
+}))
 
 // requiring routes
 const commentRoutes = require('./routes/comments'),
